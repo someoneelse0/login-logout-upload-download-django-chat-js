@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+		<title>title</title>
+		<style>
+			div p, div input, div button{
+				margin:5px;
+			}
+			div div p{
+				display:inline-block;
+			}
+			div div{
+				height:245px;
+				border:1px solid black;
+				overflow:scroll;
+			}
+		</style>
+	</head>
+	<body>
+		<div>
+			<p>Username:</p>
+			<input type="text" class="u" />
+			<p>Message:</p>
+			<input type="text" class="m" />
+			<button>Send message</button>
+			<div>
+				<p><p>
+			</div>
+		</div>
+		<script src="/socket.io/socket.io.js"></script>
+		<script>
+			let i=io();
+			let p=document.getElementsByTagName("p")[2];
+			let btn=document.getElementsByTagName("button")[0];
+			let iu=document.getElementsByClassName("u")[0];
+			let im=document.getElementsByClassName("m")[0];
+			btn.addEventListener("click",function(e){
+				e.preventDefault();
+				i.emit("f0",{username:iu.value,message:im.value});
+			},false);
+			i.on("f0",(d)=>{
+				p.innerHTML+=d.username+": "+d.message+"<br />";
+			});
+		</script>
+	</body>
+</html>
